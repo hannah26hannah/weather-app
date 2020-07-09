@@ -1,14 +1,19 @@
+
+
 window.addEventListener('load', () => {
+    // import Unsplash from 'unsplash-js';
+
     let long; // longitude 
     let lat; // latitude 
     let temparatureDescription = document.querySelector('.temparature-description');
+    
     let temparatureDegree = document.querySelector('.temparature-degree');
     let locationTimezone = document.querySelector('.location-timezone');
     const temparatureSection = document.querySelector('.temparature-wrap');
     const temparatureSpan = document.querySelector('.temparature-wrap span');
     const feelsLike = document.querySelector('.feelsLike');
     const feelsLikeSpan = document.querySelector('.feelsLike-section span');
-
+  
     if(navigator.geolocation) { // "If this exists, .."
         navigator.geolocation.getCurrentPosition(position => { 
             // we can name whatever we want for "position"
@@ -23,11 +28,11 @@ window.addEventListener('load', () => {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
                     const {temp, feels_like} = data.main;
                     const {description} = data.weather[0];
                     let {main} = data.weather[0]
                     const {country} = data.sys;
+                    console.log(description)
 
                     // main atmosphere filtering
                     const atmosphere = ['Mist', 'Smoke', 'Haze', 'Dust', 'Fog', 'Sand', 'Ash', 'Squall', 'Tornado'];
@@ -67,6 +72,35 @@ window.addEventListener('load', () => {
                     });
                 })
             
+            
+            const unsplash_api = `${proxy}https://api.unsplash.com/search/photos?query=clouds&client_id=-vvPx1nl3XaoE4pYMYBz4VcEZVsJuxjLvtKNUk-Kjvs`;
+            
+           
+
+            fetch(unsplash_api)
+                .then(unsplash_response => {
+                    return unsplash_response.json();
+                })
+                .then(data => {
+                    console.log(data)
+                    
+                    const {urls} = data.results[0];
+                    const full = urls.full;
+
+                    // set the background iamge
+                    const bgImage = document.body.style;
+                    bgImage.backgroundImage = `url(${full})`;
+                    bgImage.backgroundRepeat = "no-repeat";
+                    bgImage.backgroundSize = "cover";
+                    
+                    // getting current description of weather depending on the weather api description
+                   
+                });
+
+            
+            
+
+
         }); 
     } else {
         h1.textContent = "hey this is not working!";
