@@ -18,7 +18,6 @@ window.addEventListener('load', () => {
             const proxy = 'https://cors-anywhere.herokuapp.com/';
             const api = `${proxy}https://api.openweathermap.org/data/2.5/weather?q=Seoul,KR&units=metric&appid=4bc4f6d6639c0b4294d6e1eb992b6382`;
             
-            
             fetch(api)
                 .then(response => { // we can name whatever we want for "response"
                     return response.json();
@@ -31,19 +30,16 @@ window.addEventListener('load', () => {
                     const {country} = data.sys;
 
                     // main atmosphere filtering
-                    
                     const atmosphere = ['Mist', 'Smoke', 'Haze', 'Dust', 'Fog', 'Sand', 'Ash', 'Squall', 'Tornado'];
-                    
-                    const matched = (el) => el == main;
+                    const matched = atmosphere.includes(main);
                     if(matched) {
-                        main = 'Fog';
-                    } else {
-                        return main
+                        main = atmosphere[4];
                     }
                     
                     // Set DOM ELements from the API
-                    temparatureDegree.textContent = Number((temp).toFixed(1));
+                    const temFixed = Number((temp).toFixed(1));
                     let feelsLikeTem = Number((feels_like).toFixed(1));
+                    temparatureDegree.textContent = temFixed;
                     feelsLike.textContent = feelsLikeTem;
                     temparatureDescription.textContent = description;
                     locationTimezone.textContent = `${data.name.toUpperCase()} / ${country}`;
@@ -64,7 +60,7 @@ window.addEventListener('load', () => {
                             feelsLike.textContent = feelsLikeFahrenheit;
                         } else {
                             temparatureSpan.textContent = "C";
-                            temparatureDegree.textContent = temp;
+                            temparatureDegree.textContent = temFixed;
                             feelsLikeSpan.textContent = "C";
                             feelsLike.textContent = feelsLikeTem;
                         }
