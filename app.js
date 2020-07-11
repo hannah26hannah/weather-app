@@ -6,6 +6,8 @@ window.addEventListener('load', () => {
     let long; // longitude 
     let lat; // latitude 
     let temparatureDescription = document.querySelector('.temparature-description');
+
+    const temparatureDescription__text = temparatureDescription.textContent;
     
     let temparatureDegree = document.querySelector('.temparature-degree');
     let locationTimezone = document.querySelector('.location-timezone');
@@ -32,7 +34,6 @@ window.addEventListener('load', () => {
                     const {description} = data.weather[0];
                     let {main} = data.weather[0]
                     const {country} = data.sys;
-                    console.log(description)
 
                     // main atmosphere filtering
                     const atmosphere = ['Mist', 'Smoke', 'Haze', 'Dust', 'Fog', 'Sand', 'Ash', 'Squall', 'Tornado'];
@@ -70,38 +71,36 @@ window.addEventListener('load', () => {
                             feelsLike.textContent = feelsLikeTem;
                         }
                     });
+
+                    // Unsplash api scope
+                    const currentTheme = description.split(' ').join();
+                    
+                    const unsplash_api = `${proxy}https://api.unsplash.com/search/photos?query=${currentTheme},weather&client_id=-vvPx1nl3XaoE4pYMYBz4VcEZVsJuxjLvtKNUk-Kjvs`;
+            
+                    fetch(unsplash_api)
+                        .then(unsplash_response => {
+                            return unsplash_response.json();
+                        })
+                        .then(data => {
+                            console.log(data)
+                            
+                            const {urls} = data.results[0];
+                            const full = urls.full;
+        
+                            // set the background iamge
+                            const bgImage = document.body.style;
+                            bgImage.backgroundImage = `url(${full})`;
+                            bgImage.backgroundRepeat = "no-repeat";
+                            bgImage.backgroundSize = "cover";
+                            
+                            // getting current description of weather depending on the weather api description
+                           
+                        });
+                }); 
                 })
             
             
-            const unsplash_api = `${proxy}https://api.unsplash.com/search/photos?query=clouds&client_id=-vvPx1nl3XaoE4pYMYBz4VcEZVsJuxjLvtKNUk-Kjvs`;
-            
-           
 
-            fetch(unsplash_api)
-                .then(unsplash_response => {
-                    return unsplash_response.json();
-                })
-                .then(data => {
-                    console.log(data)
-                    
-                    const {urls} = data.results[0];
-                    const full = urls.full;
-
-                    // set the background iamge
-                    const bgImage = document.body.style;
-                    bgImage.backgroundImage = `url(${full})`;
-                    bgImage.backgroundRepeat = "no-repeat";
-                    bgImage.backgroundSize = "cover";
-                    
-                    // getting current description of weather depending on the weather api description
-                   
-                });
-
-            
-            
-
-
-        }); 
     } else {
         h1.textContent = "hey this is not working!";
     }

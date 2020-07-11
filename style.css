@@ -9,9 +9,24 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(#2f96a3, #303e8f);
   font-family: 'Montserrat', sans-serif;
-  color: white; }
+  color: white;
+  background: linear-gradient(#2f96a3, #303e8f); }
+  body::after {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 460px;
+    background: lightslategray;
+    z-index: -10;
+    opacity: 0.5;
+    border-radius: 26%;
+    padding: 30px;
+    box-shadow: 6px 7px 29px 0px rgba(115, 115, 103, 0.63); }
+  body .location-wrap {
+    padding: 10px 60px 0 60px; }
+  body .temparature-wrap {
+    margin: 0 60px -10px 60px; }
   body .location-wrap,
   body .temparature-wrap {
     width: 50%;
@@ -19,6 +34,9 @@ body {
     display: flex;
     justify-content: space-evenly;
     align-items: center; }
+    body .location-wrap .bubble,
+    body .temparature-wrap .bubble {
+      padding: 0 5px; }
   body .temparature-wrap {
     cursor: pointer; }
     body .temparature-wrap .temparature-section {
