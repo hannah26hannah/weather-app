@@ -1,0 +1,38 @@
+footer {
+    background: rgba(95, 94, 94, 0.5);
+    display: flex;
+    height: 3rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.5rem;
+
+    h6 {
+        display: block;
+        margin-left: 1rem;
+        color: white;
+    }
+    ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        list-style: none;
+        li {
+            margin-right: 1rem;
+        }
+    }
+    .icons {
+        cursor: pointer;
+        color: white;
+        &:visited {
+            color: white;
+        }
+        &:hover {
+            color: black;
+        }
+    }
+}

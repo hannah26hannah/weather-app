@@ -1,0 +1,29 @@
+.notification-bar {
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: black;
+    height: 5rem;
+
+    .noti-content {
+        width: 50%;
+        display: flex;
+        justify-content: flex-end;
+    }
+    .content-text {
+
+    }
+    .content-close {
+        width: auto;
+        padding-right: 1rem;
+        i {
+            font-size: 2vw;   
+        }
+    }
+}
+.isClosed {
+    display: none;
+}
