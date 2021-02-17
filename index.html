@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Weather App</title>
+    <title>Hannah Weather App</title>
+    <link rel="icon" href="./favicon.svg" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
     <script defer src="https://kit.fontawesome.com/d2606cafc2.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="style.css">
-    <script defer src="app.js"></script>
-    <script defer src="skycons.js"></script>
+    <link rel="stylesheet" href="./assets/style/style.css">
+    <script defer src="./assets/js/app.js"></script>
+    <script defer src="./assets/js/skycons.js"></script>
 </head>
 <body>
     <figure class="notification-bar isClosed">
-        <div class="noti-content content-text"><h4>Hello world</h4></div>
-        <div class="noti-content content-close"><i class="fas fa-times-circle icons"></i></div>
+        <div class="noti-content content-text"></div>
+        </div>
+        <div class="noti-content content-close">
+            <i class="fas fa-times-circle icons"></i>
+        </div>
         
     </figure>
 
@@ -34,12 +38,12 @@
             <div class="feelsLike-section bubble">
                 <h3>Feels Like</h3>
                 <h3 class="feelsLike"></h3>
-                <h3>C</h3>
+                <h3 class='unit'>C</h3>
             </div>
         </section>
     </main>
     <aside class="inputCloud">
-        <input type="text" id="region" placeholder="Set your region here.." />
+        <input type="text" autocomplete='off' id="region" placeholder="Set your region here.." />
     </aside>
     <footer>
         <h6>&copy; <span class="this-year"></span> hannah26hannah</h6>

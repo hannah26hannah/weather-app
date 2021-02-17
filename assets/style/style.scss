@@ -2,35 +2,54 @@
 @import '_footer.scss';
 @import '_breakpoints.scss';
 
-@mixin responsiveText {
-    h2 {
-        font-size: 3vw;
-    }
-    span {
-        margin: 10px;
-        font-size: 2vw;
+
+
+@mixin flexCol {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin hoverColor {
+    &:hover {
+        color: black;
     }
 }
+
+$tempSize: '2rem';
+$descSize: '1rem';
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
+html {
+    padding: 0 2.5% 0 2.5%;
+}
 body {
     height: calc(100vh - 3rem);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     font-family: 'Montserrat', sans-serif;
     color: white;
     background: linear-gradient(rgb(47, 150, 163), rgb(48, 62, 143));
     padding: 20% 30% 30% 30%;
+    @include mobile {
+        padding: 0 0 0 0;
+    }
+    @include tablet {
+        padding: 0 20% 20% 20%;
+    }
     overflow: hidden;
     .inputCloud {
         width: 40%;
+        @include mobile { width: 95%; }
+        @include tablet { width: 70%; }
+
         height: auto;
         position: fixed;
         bottom: 4rem;
@@ -40,7 +59,6 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-        
         input {
             width: 100%;
             height: 1rem;
@@ -48,6 +66,7 @@ body {
             background-color: transparent;
             border: none;
             font-size: 1.5vw;
+            color: white;
 
             @include mobile {
                 font-size: 1rem;
@@ -62,44 +81,34 @@ body {
         
     }
     .cloud {
-        width: 100%;
-        // padding: 30px;
+        width: 95%;
+        margin-top: 20%;
+        margin-bottom: 10%;
+        @include mobile {
+            margin-top: 0;
+        }
         height: auto;
         padding: 10% 0;
         box-shadow: 6px 7px 29px 0px rgba(115,115,103,0.63);
         background: rgba(95, 94, 94, 0.5);
         border-radius: 26%;
         z-index: 10;
+        
         display: flex;
         flex-direction: column;
 
         .region-wrap {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 10%;
+            @include flexCol;
+            width: 100%;            
+            margin-bottom: 1rem;
 
-            h1 {
-                font-size: 2.7vw;
-            }
-
-            div {
-                font-size: 2vw;
-            }
-
+            div {font-size: 1.5rem;}
         }
         .location-wrap {
         padding: 10px 60px 0 60px;
         margin-bottom: 1rem;
         flex-direction: column;
-            h1 {
-                display: block;
-                font-size: 2vw;
-            }
         }
-
 
         .location-wrap,
         .temparature-wrap {
@@ -112,34 +121,38 @@ body {
             .bubble {
                 padding: 0 5px;
                 width: 30%;
+
+                @include mobile { width: 55%; }
             }
         }
         .temparature-wrap {
             cursor: pointer;
             flex-direction: column;
+            padding: 1rem;
             .temparature-section {
                 display: flex;
                 align-items: center;
+                justify-content: center;
+                h2, span { font-size: $tempSize }; 
+                @include hoverColor;
                 
-                &:hover {
-                    color: black;
-                }
-                @include responsiveText
             }
 
             .feelsLike-section {
                 display: flex;
                 align-items: center;
+                justify-content: center;
                 margin-bottom: -10px;
                 width: 62%;
                 
-                &:hover {
-                    color: black;
-                }
-                h3 {
+                @include hoverColor;
+
+                .feelsLike, 
+                .unit {
                     margin: 5px;
-                    font-size: 2vw
+                    font-size: $tempSize 
                 }
+                
             }
         }
     }

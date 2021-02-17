@@ -9,14 +9,47 @@
     const temparatureSection = document.querySelector('.temparature-wrap');
     const temparatureSpan = document.querySelector('.temparature-wrap span');
     const feelsLike = document.querySelector('.feelsLike');
-    const feelsLikeSpan = document.querySelector('.feelsLike-section span');
+    const feelsLikeSpan = document.querySelector('.feelsLike-section .unit');
     const region = document.getElementById('region');
     
+    // Temperatre related
+    let currentTemp, currentFeelsLike, temFixed, feelsLikeTem;
+
     // const proxy = 'https://cors-anywhere.herokuapp.com/';
     const alterProxy = 'https://secret-ocean-49799.herokuapp.com/'
     let myRegion = '';
 
-    // commons 
+    // Notification 
+    const notiBar = document.querySelector('.notification-bar');
+    const notiTxt = document.querySelector('.notification-bar .content-text');
+    const closeIcon = document.querySelector('.notification-bar .content-close');
+
+const notice = {
+    loading: { text: '🌐 Please wait..', color: '#f7f1e3' },
+    update: { text: '👀 Weather Information is updated!', color: '#33d9b2'},
+    geoFail: { text: '🌐 Sorry, Geolocation is not supported by this browser', color: '#ff5252' },
+    regionFail: { text: '🌐 Sorry, Region infomation is not valid!', color: '#ff5252'
+    },
+    fail: { text: '😥 Sorry, Something is wrong! Try Again', color: '#ff5252' }
+    }
+
+function noticeState(notice) { 
+    notiTxt.textContent = notice.text;
+    notiBar.style.backgroundColor = notice.color;
+    if (notiBar.classList.contains('isClosed')) {
+        notiBar.classList.remove('isClosed')
+        setTimeout(() => {
+            notiBar.classList.add('isClosed')
+        }, 3000)
+    } else { 
+        setTimeout(() => { 
+            notiBar.classList.add('isClosed')
+        }, 3000)
+    }
+
+}
+
+
 function setIcons(main, iconID) {
     const skycons = new Skycons({ 
         color: "white"
@@ -28,6 +61,27 @@ function setIcons(main, iconID) {
     return skycons.set(iconID, Skycons[currentIcon])
 }
 
+function toggleTemp(temp, feels_like, temFixed, feelsLikeTem) { 
+    // FORMULA FOR CELCIUS
+    let fahrenheit = Number(((temp * 1.8) + 32).toFixed(1));
+    let feelsLikeFahrenheit = Number(((feels_like * 1.8) + 32).toFixed(1));
+    
+    // Change temparature to Celsius/Fahrenheit
+    if(temparatureSpan.textContent === "C") {
+        temparatureSpan.textContent = "F";
+        temparatureDegree.textContent = fahrenheit;
+        feelsLikeSpan.textContent = "F";
+        feelsLike.textContent = feelsLikeFahrenheit;
+    } else {
+        temparatureSpan.textContent = "C";
+        temparatureDegree.textContent = temFixed;
+        feelsLikeSpan.textContent = "C";
+        feelsLike.textContent = feelsLikeTem;
+    }
+    
+}
+
+
 function getApi(api, alterProxy) { 
     fetch(api)
     .then(response => {
@@ -35,7 +89,8 @@ function getApi(api, alterProxy) {
     })
     .then(data => {
         const { temp, feels_like } = data.main;
-        
+        currentTemp = temp;
+        currentFeelsLike = feels_like
         const {description} = data.weather[0];
         let {main} = data.weather[0]
         const {country} = data.sys;
@@ -48,34 +103,16 @@ function getApi(api, alterProxy) {
         }
         
         // Set DOM ELements from the API
-        const temFixed = Number((temp).toFixed(1));
-        let feelsLikeTem = Number((feels_like).toFixed(1));
+        temFixed = Number((temp).toFixed(1));
+        feelsLikeTem = Number((feels_like).toFixed(1));
         temparatureDegree.textContent = temFixed;
         feelsLike.textContent = feelsLikeTem;
         temparatureDescription.textContent = description;
         locationTimezone.textContent = `${data.name.toUpperCase()} / ${country}`;
 
-        // FORMULA FOR CELCIUS
-        let fahrenheit = Number(((temp * 1.8) + 32).toFixed(1));
-        let feelsLikeFahrenheit = Number(((feels_like * 1.8) + 32).toFixed(1));
         
         // Set Icon
         setIcons(main, document.querySelector('.icon'))
-
-        // Change temparature to Celsius/Fahrenheit
-        temparatureSection.addEventListener('click', () => {
-            if(temparatureSpan.textContent === "C") {
-                temparatureSpan.textContent = "F";
-                temparatureDegree.textContent = fahrenheit;
-                feelsLikeSpan.textContent = "F";
-                feelsLike.textContent = feelsLikeFahrenheit;
-            } else {
-                temparatureSpan.textContent = "C";
-                temparatureDegree.textContent = temFixed;
-                feelsLikeSpan.textContent = "C";
-                feelsLike.textContent = feelsLikeTem;
-            }
-        });
 
         // Unsplash api scope
         const currentTheme = description.split(' ').join();
@@ -94,11 +131,12 @@ function getApi(api, alterProxy) {
                 bgImage.backgroundImage = `url(${full})`;
                 bgImage.backgroundRepeat = "no-repeat";
                 bgImage.backgroundSize = "cover";
-                
-            });
+            }).then(() => {
+                noticeState(notice.update);
+            })
         region.value = '';
     }).catch(err => { 
-        h1.textContent = 'sorry!'
+        noticeState(notice.fail);
     })
 }
 
@@ -126,10 +164,12 @@ window.addEventListener('load', () => {
     const location = navigator.geolocation;
     if (location) {
         getLocation(location, alterProxy);
-    } else { 
-        h1.textContent = "🌐 Sorry, Geolocation is not supported by this browser";
+
+        noticeState(notice.loading)
+    } else {
+        noticeState(notice.geoFail);
     }
-    yearCount();    
+    yearCount();
 });
 
 region.onchange = (e) => { 
@@ -139,6 +179,20 @@ region.onchange = (e) => {
         const api = `${alterProxy}https://api.openweathermap.org/data/2.5/weather?q=${myRegion}&units=metric&appid=4bc4f6d6639c0b4294d6e1eb992b6382`;
         getApi(api, alterProxy);
     } else { 
-         h1.textContent = "Sorry, Region infomation is not valid!"
+         noticeState(notice.regionFail)
+    }
+}
+
+
+temparatureSection.addEventListener('click', () => { 
+    toggleTemp(currentTemp, currentFeelsLike, temFixed, feelsLikeTem);
+}) 
+
+closeIcon.onClick = () => {
+    if (notiBar.classList.contains('isClosed')) {
+        notiBar.classList.remove('isClosed')
+        setTimeout(() => {
+            notiBar.classList.add('isClosed')
+        }, 3000)
     }
 }

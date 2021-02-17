@@ -1,0 +1,40 @@
+$noteBarHeight : 4rem;
+
+.notification-bar {
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: rgb(180, 187, 189);
+    height: $noteBarHeight;
+    color: black;
+    
+    .noti-content {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .content-close {
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: $noteBarHeight;
+        height: $noteBarHeight;
+        font-size: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        i {
+            font-size: 1.5rem;
+        }
+    }
+
+    
+}
+.isClosed {
+    display: none;
+}
