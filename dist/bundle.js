@@ -13,7 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 /* 2 */
 /***/ (() => {
 
-let long; // longitude 
+    let long; // longitude 
     let lat; // latitude 
     let temparatureDescription = document.querySelector('.temparature-description');
 

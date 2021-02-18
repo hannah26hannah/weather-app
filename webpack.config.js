@@ -43,7 +43,8 @@ module.exports = {
             minify: {
                 collapseWhitespace: true
             },
-            hash: true
+            hash: true,
+            favicon: './weather.ico'
         })
    ],
    resolve: {

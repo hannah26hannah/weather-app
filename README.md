@@ -15,7 +15,8 @@ Practice vanilla JavaScript events & fetching open APIs
 - After getting weather information, it finds matchy background image according to description of current weather
 - User also can browse city name
 
-[DEMO]()
+[DEMO](https://hannah-weather-app.netlify.app/)
+
 
 # Preview
 <img src='./assets/images/weather_1.png' alt='preview' />
