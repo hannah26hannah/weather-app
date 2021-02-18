@@ -1,5 +1,5 @@
 # Weather-app
-Simple weather app displaying matching background iamges.
+Simple weather app displaying matching background images.
 Built with vanilla JavaScript
 
 Used Open API & Assets

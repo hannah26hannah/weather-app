@@ -44,7 +44,7 @@ module.exports = {
                 collapseWhitespace: true
             },
             hash: true,
-            favicon: './weather.ico'
+            favicon: './weather_2.png'
         })
    ],
    resolve: {
