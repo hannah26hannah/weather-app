@@ -54,7 +54,7 @@ function setIcons(main, iconID) {
     const skycons = new Skycons({ 
         color: "white"
     });
-
+    
     const currentIcon = main.toUpperCase();
         
     skycons.play();
